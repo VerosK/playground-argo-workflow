@@ -1,0 +1,7 @@
+#!/bin/bash
+
+minikube start -n 1 --memory 4096 --driver virtualbox
+
+kubectl create ns argo
+kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
+

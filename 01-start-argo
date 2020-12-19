@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+kubectl create ns argo
+kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
+
+kubectl create clusterrolebinding minikube-cluster-admin-binding --clusterrole=cluster-admin --user=ahoj@veroskaplan.cz
+
+kubectl -n argo port-forward deployment/argo-server 2746:2746
+
+if [ ! -f argo ]; then
+	wget --continue https://github.com/argoproj/argo/releases/download/v2.12.2/argo-linux-amd64.gz
+	gunzip < argo-linux-amd64.gz > argo
+	chmod +x argo
+fi
+
