@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dag- 
+spec:
+  entrypoint: main
+  templates:
+  - name: delay
+    suspend:
+      duration: "10s"
+  - name: main
+    dag:
+      tasks:
+      - name: zero
+        template: delay
+      - name: A
+        template: delay
+      - name: B
+        dependencies: [A]
+        template: delay
+      - name: C
+        dependencies: [A]
+        template: delay
+      - name: D
+        dependencies: [zero, B, C]
+        template: delay
